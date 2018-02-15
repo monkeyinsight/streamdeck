@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .buttons button {
+            flex-basis: 75px;
+            height: 75px;
+            width: 75px;
+            background: none;
+            border: 1px #000 solid;
+            outline: 0;
+            margin: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="buttons">
+    {{buttons}}
+    </div>
+    <script>
+        function click() {
+            var request = new XMLHttpRequest();
+            request.open('GET', '/' + this.getAttribute('data-value'), true);
+
+            request.onload = function() {
+                if (request.status >= 200 && request.status < 400) {
+                    // success
+                } else {
+                    // fail
+                }
+            };
+
+            request.send();
+        }
+        document.querySelectorAll('button').forEach(function (btn) {
+            btn.addEventListener('click', click);
+        });
+    </script>
+</body>
+</html>
