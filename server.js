@@ -13,13 +13,25 @@ const buttons = {
 };
 
 http.createServer(function (req, res) {
-    if (req.url != '/') {
+    if (req.url == '/manifest.json') {
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({
+            "name": "Stream Deck",
+            "short_name": "Stream Deck",
+            "theme_color": "#311B92",
+            "background_color": "#311B92",
+            "display": "standalone",
+            "start_url": "/"
+        }));
+    } else if (req.url != '/') {
         if (buttons[req.url.slice(1)]) {
             res.writeHead(200, {'Content-Type': 'application/json'});
             exec(buttons[req.url.slice(1)].file, function (err, data) {
                 if (err) {
+                    console.log(err);
                     res.end(JSON.stringify({'success': 'false'}));
                 } else {
+                    console.log(data);
                     res.end(JSON.stringify({'success': 'true'}));
                 }
             });
